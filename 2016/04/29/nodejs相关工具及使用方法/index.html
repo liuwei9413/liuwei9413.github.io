@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="nodejs工具," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="概述本文记录nodejs学习过程中的相关知识（主要是一些坑，记录下来防止自己再次陷入，也给新加入nodejs学习的朋友提个醒）。包括：nodejs多个版本管理切换工具使用，主流框架express使用，MongoDB数据库的安装及使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs相关工具及使用方法">
+<meta property="og:url" content="http://yoursite.com/2016/04/29/nodejs相关工具及使用方法/index.html">
+<meta property="og:site_name" content="Gump's Blog">
+<meta property="og:description" content="概述本文记录nodejs学习过程中的相关知识（主要是一些坑，记录下来防止自己再次陷入，也给新加入nodejs学习的朋友提个醒）。包括：nodejs多个版本管理切换工具使用，主流框架express使用，MongoDB数据库的安装及使用。">
+<meta property="og:image" content="http://yoursite.com/uploads/images/mongodb_test.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/images/mongodb_test2.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/images/mongodb_test3.jpg">
+<meta property="og:updated_time" content="2016-07-07T08:03:39.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs相关工具及使用方法">
+<meta name="twitter:description" content="概述本文记录nodejs学习过程中的相关知识（主要是一些坑，记录下来防止自己再次陷入，也给新加入nodejs学习的朋友提个醒）。包括：nodejs多个版本管理切换工具使用，主流框架express使用，MongoDB数据库的安装及使用。">
+<meta name="twitter:image" content="http://yoursite.com/uploads/images/mongodb_test.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/29/nodejs相关工具及使用方法/"/>
+
+  <title> Nodejs相关工具及使用方法 | Gump's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0524c732034ffc0678fc160343d63139";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Gump's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'wNmgq_Y1aE7Ft2Zf3Dyy','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Nodejs相关工具及使用方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-29T19:30:21+08:00" content="2016-04-29">
+              2016-04-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/29/nodejs相关工具及使用方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/nodejs相关工具及使用方法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本文记录nodejs学习过程中的相关知识（主要是一些坑，记录下来防止自己再次陷入，也给新加入nodejs学习的朋友提个醒）。包括：nodejs多个版本管理切换工具使用，主流框架express使用，MongoDB数据库的安装及使用。</p>
+<a id="more"></a>
+<h2 id="Nodejs多版本切换工具（nvmw）"><a href="#Nodejs多版本切换工具（nvmw）" class="headerlink" title="Nodejs多版本切换工具（nvmw）"></a>Nodejs多版本切换工具（nvmw）</h2><p>相信接触过Nodejs的朋友，对Nodejs使用不同版本可能造成的不兼容问题非常头疼，由于本人没有研究过Linux系统，用的是windows系统（据说windows系统下nodejs坑特别多），首先就是网上各种找工具，windows下的工具能用貌似不多。要么不能用，要么收费，反正各种问题。最后找到了一款 <code>nvmw</code>,免费且在windows下使用很方便。</p>
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><ol>
+<li>下载 git clone <a href="https://github.com/hakobera/nvmw" target="_blank" rel="external">https://github.com/hakobera/nvmw</a> （没有用过github的朋友，请先了解下github）；</li>
+<li>设置环境变量：把nvmw的路径添加到系统环境变量（方便命令行直接操作nvmw）。添加步骤：右键我的电脑–属性–高级系统设置–环境变量–选中系统变量下Path行双击进入–新建–输入nvmw的路径如(D:/nvmw)；</li>
+<li>打开cmd，输入nvmw，会出现命令列表；</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
+<li><code>nvmw ls</code> #查看已安装的nodejs列表</li>
+<li><code>set &quot;NVMW_NODEJS_ORG_MIRROR=https://npm.taobao.org/dist&quot;</code> #设置nodejs资源下载地址（如果不设置，直接安装会报错）</li>
+<li><code>nvmw install v4.0.0</code> #安装nodejs 4.0.0版本（如果出现失败多试几次，我在安装的时候总是失败。自己手动在nvmw文件夹下新建nodejs相关版本文件夹，如v4.0.0文件夹，然后到<a href="http://nodejs.org/dist/" target="_blank" rel="external">http://nodejs.org/dist/</a> 下载对应版本的.exe文件到v4.0.0文件夹下）</li>
+<li><code>nvmw use v4.0.0</code> #切换到v4.0.0版本</li>
+<li><code>node -v</code> #查看当前使用的nodejs版本（显示v4.0.0）。</li>
+</ul>
+<h2 id="Express安装及使用"><a href="#Express安装及使用" class="headerlink" title="Express安装及使用"></a>Express安装及使用</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li><code>npm install -g express@3</code> #安装3.x版本 若安装最新版去掉<code>@3</code>即可 <code>-g</code>全局安装 保证在计算机任何地方都可以直接使用express命令；（提示：如果想切换express版本，直接重新安装对应版本即可覆盖之前版本）</li>
+<li><code>npm install -g express-generator</code> #express 4.x以后将express命令独立到express-generator包中，所以想使用express初始化项目目录得先安装express-generator。</li>
+</ol>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li><code>express -h</code> #查看帮助信息</li>
+<li><code>express -e</code> #使用ejs模板引擎（默认是jade模板）</li>
+<li><code>express myapp</code> #初始化项目（使用这个命令之前，先把命令行路径切换到指定位置，该命令会在当前位置创建一个myapp项目文件夹）</li>
+</ul>
+<h2 id="MongoDB安装及使用"><a href="#MongoDB安装及使用" class="headerlink" title="MongoDB安装及使用"></a>MongoDB安装及使用</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>下载地址：<a href="http://www.mongodb.org/downloads" target="_blank" rel="external">http://www.mongodb.org/downloads</a></li>
+<li>解压缩到自己想要安装的目录，例如<code>D:\mongodb</code></li>
+<li>创建文件夹<code>d:\mongodb\data\db</code>,<code>d:\mongodb\data\log</code>，分别用来安装存放db和日志文件</li>
+<li>开启<code>mongod.exe</code>程序 运行cmd 执行以下命令:(1)&gt;<code>cd d:\mongodb\bin</code> (2)&gt;<code>d:\mongodb\bin&gt;mongod -dbpath &quot;d:\mongod\data\db&quot;</code></li>
+<li>新开一个cmd窗口，进入mongodb/bin目录，输入<code>mongo</code>或<code>mongo.exe</code>，进入test这个数据库。显示如下信息则表明数据库开启成功。<img src="/uploads/images/mongodb_test.jpg" alt="alt 开启mongodb数据库"></li>
+<li>当<code>mongod.exe</code>被关闭时，<code>mongo.exe</code>就无法连接到数据库了，因此每次使用都要开启<code>mongod.exe</code>程序，比较麻烦。可以将MongoDB安装为windows服务。 以管理员运行cmd，进入<code>d:\mongodb\bin</code>目录，输入<code>mongod --dbpath &quot;d:\mongodb\data\db&quot; --logpath &quot;d:\mongodb\data\log\MongoDB.log&quot; --install --serviceName &quot;MongoDB&quot;</code>  再输入<code>net start MongoDB</code>启动MongoDB服务，将会显示：<img src="/uploads/images/mongodb_test2.jpg" alt="alt 开启MongoDB服务成功"></li>
+<li>关闭服务和删除进程  <code>net stop MongoDB</code> #关闭服务 <code>mongod --dbpath &quot;d:\mongodb\data\db&quot; --logpath &quot;d:\mongodb\data\log\MongoDB.log&quot; --remove --serviceName &quot;MongoDB&quot;</code>(注意这里不是install了) #删除进程</li>
+</ol>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><blockquote>
+<p>常用命令</p>
+</blockquote>
+<ul>
+<li><code>show dbs</code> #显示数据库列表</li>
+<li><code>use dbname</code> #进入dbname数据库，没有也没关系（在数据库中创建集合后会自动创建数据库）</li>
+<li><code>show collections</code> #显示数据库中的集合，相当于表</li>
+</ul>
+<blockquote>
+<p>创建和新增</p>
+</blockquote>
+<ul>
+<li><code>db.person.save({&#39;name&#39;:&#39;liuwei&#39;})</code> #在数据库中创建了名为person集合，并新增一条数据{‘name’:’liuwei’}</li>
+<li><code>db.person.insert({&#39;name&#39;:&#39;fengge&#39;,&#39;age&#39;:&#39;25&#39;})</code> #person集合中新增一条数据</li>
+<li><code>save</code>和<code>insert</code>区别 当新插入的数据的主键(_id)已经存在，<code>save</code>会更新该条数据 <code>insert</code>则会报错 </li>
+</ul>
+<blockquote>
+<p>删除</p>
+</blockquote>
+<ul>
+<li><code>db.person.remove({&#39;name&#39;:&#39;liuwei&#39;})</code> #删除{‘name’:’liuwei’}这条数据</li>
+<li><code>db.person.remove({})</code> #删除person集合内所有数据</li>
+<li><code>db.peroson.drop()</code>或<code>db.runCommand({&#39;drop&#39;:&#39;person&#39;})</code> #删除集合person</li>
+<li><code>db.runCommand({&#39;dropDatabase&#39;:1})</code> #删除当前数据库</li>
+</ul>
+<blockquote>
+<p>查找</p>
+</blockquote>
+<ul>
+<li><code>db.person.find()</code> #查找person集合中所有数据</li>
+<li><code>db.person.findOne()</code> #查找person集合中第一条数据</li>
+</ul>
+<blockquote>
+<p>修改</p>
+</blockquote>
+<ul>
+<li><code>db.person.update({&#39;age&#39;:&#39;300&#39;},{&#39;name&#39;:&#39;haha&#39;,&#39;age&#39;:&#39;22&#39;})</code> #修改含有{‘age’:’300’}的数据为{‘name’:’haha’,’age’:’22’}主键后的所有数据都将被替换 第一个参数为查找条件，第二个参数为替换后的数据 主键不可替换 <img src="/uploads/images/mongodb_test3.jpg" alt="alt 修改数据"></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nodejs工具/" rel="tag">#nodejs工具</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/22/HTML5本地存储/" rel="next" title="HTML5本地存储">
+                <i class="fa fa-chevron-left"></i> HTML5本地存储
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/29/nodejs相关工具及使用方法/"
+           data-title="Nodejs相关工具及使用方法" data-url="http://yoursite.com/2016/04/29/nodejs相关工具及使用方法/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="liuwei" />
+          <p class="site-author-name" itemprop="name">liuwei</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re going to get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuwei9413" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/lw9413/" target="_blank" title="cnblogs">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  cnblogs
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/82422709/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nodejs多版本切换工具（nvmw）"><span class="nav-number">2.</span> <span class="nav-text">Nodejs多版本切换工具（nvmw）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用步骤"><span class="nav-number">2.1.</span> <span class="nav-text">使用步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">2.2.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Express安装及使用"><span class="nav-number">3.</span> <span class="nav-text">Express安装及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">3.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB安装及使用"><span class="nav-number">4.</span> <span class="nav-text">MongoDB安装及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">4.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-1"><span class="nav-number">4.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liuwei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liuwei9413"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

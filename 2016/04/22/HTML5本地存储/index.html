@@ -1,0 +1,750 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="h5本地存储," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="localStorage和sessionStorage定义
+localStorage 是没有时间限制的数据存储，也就是说永远不会过期，除非主动删除数据。数据可以跨越多个窗口，同一域名下所有页面共享数据。
+sessionStorage 是针对一个session的数据存储，按窗口区分，同一窗口下，一个网站的任何页面都可以共享数据。每个窗口的数据都是独立的，它的数据会因窗口的关闭而丢失，不同窗口直接的s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML5本地存储">
+<meta property="og:url" content="http://yoursite.com/2016/04/22/HTML5本地存储/index.html">
+<meta property="og:site_name" content="Gump's Blog">
+<meta property="og:description" content="localStorage和sessionStorage定义
+localStorage 是没有时间限制的数据存储，也就是说永远不会过期，除非主动删除数据。数据可以跨越多个窗口，同一域名下所有页面共享数据。
+sessionStorage 是针对一个session的数据存储，按窗口区分，同一窗口下，一个网站的任何页面都可以共享数据。每个窗口的数据都是独立的，它的数据会因窗口的关闭而丢失，不同窗口直接的s">
+<meta property="og:updated_time" content="2016-07-07T07:18:02.150Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML5本地存储">
+<meta name="twitter:description" content="localStorage和sessionStorage定义
+localStorage 是没有时间限制的数据存储，也就是说永远不会过期，除非主动删除数据。数据可以跨越多个窗口，同一域名下所有页面共享数据。
+sessionStorage 是针对一个session的数据存储，按窗口区分，同一窗口下，一个网站的任何页面都可以共享数据。每个窗口的数据都是独立的，它的数据会因窗口的关闭而丢失，不同窗口直接的s">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/22/HTML5本地存储/"/>
+
+  <title> HTML5本地存储 | Gump's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0524c732034ffc0678fc160343d63139";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Gump's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'wNmgq_Y1aE7Ft2Zf3Dyy','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                HTML5本地存储
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-22T13:30:42+08:00" content="2016-04-22">
+              2016-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTML5/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML5</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/22/HTML5本地存储/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/22/HTML5本地存储/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="localStorage和sessionStorage"><a href="#localStorage和sessionStorage" class="headerlink" title="localStorage和sessionStorage"></a>localStorage和sessionStorage</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
+<li><code>localStorage</code> 是<em>没有时间限制</em>的数据存储，也就是说永远不会过期，除非主动删除数据。数据可以跨越多个窗口，同一域名下所有页面共享数据。</li>
+<li><code>sessionStorage</code> 是针对一个session的数据存储，按窗口区分，同一窗口下，一个网站的任何页面都可以共享数据。每个窗口的数据都是独立的，它的数据会因窗口的关闭而丢失，不同窗口直接的<code>sessionStorage</code>不可以共享。</li>
+<li>对比cookie:本地存储空间更大（5M左右，cookie约5kb，一般用来存用户登录信息），操作方便，ie8+都可以支持。</li>
+</ul>
+<a id="more"></a>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p><code>localStorage</code>和<code>sessionStorage</code>有相同的API，如：</p>
+<ul>
+<li><code>localStorage.length</code>    获取存储数据的个数</li>
+<li><code>localStorage.key(n)</code>    获取第n条数据的键值</li>
+<li><code>localStorage.key_old = key_new</code>    修改第n条数据的键</li>
+<li><code>localStorage.setItem(key, value)</code>    添加某条数据</li>
+<li><code>localStorage.getItem(key)</code>    获取某条数据</li>
+<li><code>localStorage.removeItem(key)</code>    移除某条数据</li>
+<li><code>localStorage.clear</code>    清除所有数据</li>
+</ul>
+<p>也可以用对象的方法添加获取数据，如：</p>
+<ul>
+<li><code>localStorage.name=&quot;liuwei&quot;;</code>    添加数据</li>
+<li><code>console.log(localStorage.name);</code>    获取数据</li>
+</ul>
+<h3 id="通过StorageEvent事件响应存储变化"><a href="#通过StorageEvent事件响应存储变化" class="headerlink" title="通过StorageEvent事件响应存储变化"></a>通过StorageEvent事件响应存储变化</h3><p>无论何时，<code>Storage</code>对象发生变化时（即创建、更新、删除数据项时，重复设置相同的键不会触发该事件，<code>Storage.clear()</code>至多触发一次该事件），<code>StorageEvent</code>事件会触发。在同一个页面内发生的改变不会起作用——在相同域名下的其他页面（如一个新标签或iframe），发生的改变才会起作用。其他域名下的页面不能访问相同的Storage对象。使用方法，如：</p>
+<pre><code>window.addEventListener(&apos;storage&apos;, function(e) {
+    document.querySelector(&apos;.my-key&apos;).innerHTML = e.key;
+    document.querySelector(&apos;.my-old&apos;).innerHTML = e.oldVale;
+    document.querySelector(&apos;.my-new&apos;).innerHTML = e.newValue;
+    document.querySelector(&apos;.my-url&apos;).innerHTML = e.url;
+    document.querySelector(&apos;.my-storage&apos;).innerHTML = e.storageArea;
+});
+</code></pre><p>这里，我们为window对象添加了一个事件监听器，在当前域名相关的<code>Storage</code>对象发生改变时被触发。此事件相关的事件对象有多个属性包含了有用的信息——改变数据项的键，改变前的值，改变后的值，改变的存储对象所在的文档URL，以及存储对象本身。</p>
+<h3 id="可能的实际应用"><a href="#可能的实际应用" class="headerlink" title="可能的实际应用"></a>可能的实际应用</h3><ul>
+<li>页面刷新之后需要维持改变后的状态，如页面的一些改变后的样式，关闭开启的菜单项等等；</li>
+<li>跨页面跟踪状态，如a页面做了修改，在b页面显示出这些修改；</li>
+</ul>
+<h3 id="实例参考"><a href="#实例参考" class="headerlink" title="实例参考"></a>实例参考</h3><ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API" title="MDN Web Storage介绍" target="_blank" rel="external">MDN Web Storage介绍</a></li>
+<li><a href="http://www.zhangxinxu.com/wordpress/2011/09/html5-localstorage%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B/" title="开启关闭菜单项实例" target="_blank" rel="external">开启关闭菜单项实例</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/h5本地存储/" rel="tag">#h5本地存储</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/04/hexo命令总结/" rel="next" title="Hexo命令总结">
+                <i class="fa fa-chevron-left"></i> Hexo命令总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/29/nodejs相关工具及使用方法/" rel="prev" title="Nodejs相关工具及使用方法">
+                Nodejs相关工具及使用方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/22/HTML5本地存储/"
+           data-title="HTML5本地存储" data-url="http://yoursite.com/2016/04/22/HTML5本地存储/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="liuwei" />
+          <p class="site-author-name" itemprop="name">liuwei</p>
+          <p class="site-description motion-element" itemprop="description">Life was like a box of chocolates, you never know what you’re going to get.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/liuwei9413" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/lw9413/" target="_blank" title="cnblogs">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  cnblogs
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.douban.com/people/82422709/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#localStorage和sessionStorage"><span class="nav-number">1.</span> <span class="nav-text">localStorage和sessionStorage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">1.2.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过StorageEvent事件响应存储变化"><span class="nav-number">1.3.</span> <span class="nav-text">通过StorageEvent事件响应存储变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可能的实际应用"><span class="nav-number">1.4.</span> <span class="nav-text">可能的实际应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例参考"><span class="nav-number">1.5.</span> <span class="nav-text">实例参考</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liuwei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"liuwei9413"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
